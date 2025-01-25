@@ -83,7 +83,7 @@ public class JobBootstrap {
                 .processor(firstProcessor()) // 可选的
                 .writer(firstWriter())       // 必须的
 //                .taskExecutor(taskExecutor()) // 切换 TaskExecutor
-                .listener()
+//                .listener()
                 .build();
     }
 
