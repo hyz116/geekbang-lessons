@@ -1,7 +1,6 @@
 package org.geektimes.projects.user.sql;
 
 import com.google.common.collect.Lists;
-import org.apache.commons.lang3.function.FailableFunction;
 import org.geektimes.projects.user.domain.User;
 
 import java.io.PrintWriter;
@@ -86,8 +85,6 @@ public class MySQLDBConnectionManager {
     }
 
     private static void checkWarning(SQLWarning sqlWarning) {
-        FailableFunction
-
         while (sqlWarning != null) {
             System.out.println("Warning: " + sqlWarning.getMessage());
             System.out.println("SQLState: " + sqlWarning.getSQLState());
