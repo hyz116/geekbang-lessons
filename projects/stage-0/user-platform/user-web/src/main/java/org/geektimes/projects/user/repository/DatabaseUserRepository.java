@@ -1,7 +1,7 @@
 package org.geektimes.projects.user.repository;
 
-import org.geektimes.function.ThrowableFunction;
 import org.geektimes.context.ClassicComponentContext;
+import org.geektimes.function.ThrowableFunction;
 import org.geektimes.projects.user.domain.User;
 import org.geektimes.projects.user.sql.DBConnectionManager;
 
@@ -9,7 +9,9 @@ import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.logging.Level;
@@ -106,6 +108,7 @@ public class DatabaseUserRepository implements UserRepository {
      * @param sql
      * @param function
      * @param <T>
+     * 可以使用 org.apache.commons.lang3.function.FailableFunction
      * @return
      */
     protected <T> T executeQuery(String sql, ThrowableFunction<ResultSet, T> function,
@@ -137,6 +140,41 @@ public class DatabaseUserRepository implements UserRepository {
         }
         return null;
     }
+
+    /**
+     * 使用Apache commons lang FailableFunction 代替自定义 ThrowableFunction
+     * https://dzone.com/articles/exceptions-in-lambdas
+     */
+//    protected <T> T executeQuery(String sql,
+//                                 FailableFunction<ResultSet, T, SQLException> function,
+//                                 Consumer<Throwable> exceptionHandler,
+//                                 Object... args) {
+//
+//        Connection connection = getConnection();
+//        try {
+//            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+//            for (int i = 0; i < args.length; i++) {
+//                Object arg = args[i];
+//                Class argType = arg.getClass();
+//
+//                Class wrapperType = wrapperToPrimitive(argType);
+//
+//                if (wrapperType == null) {
+//                    wrapperType = argType;
+//                }
+//
+//                // Boolean -> boolean
+//                String methodName = preparedStatementMethodMappings.get(argType);
+//                Method method = PreparedStatement.class.getMethod(methodName, wrapperType);
+//                method.invoke(preparedStatement, i + 1, args);
+//            }
+//            ResultSet resultSet = preparedStatement.executeQuery();
+//            return function.apply(resultSet);
+//        } catch (Throwable e) {
+//            exceptionHandler.accept(e);
+//        }
+//        return null;
+//    }
 
 
     private static String mapColumnLabel(String fieldName) {

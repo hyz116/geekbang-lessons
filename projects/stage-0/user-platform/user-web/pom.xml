@@ -134,6 +134,16 @@
             <artifactId>derby</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+
         <!-- Hibernate ORM Core -->
         <dependency>
             <groupId>org.hibernate</groupId>
